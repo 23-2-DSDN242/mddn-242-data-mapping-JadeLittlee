@@ -53,24 +53,47 @@ function draw () {
     updatePixels();
   }
   else if (curLayer == 1) { //Halo around cat
-    for(let i=0; i<500; i++) {
-      let x1 = random(0, width);
-      let y1 = random(0, height);
+    for(let i=0; i<200; i++) {
+      // let x1 = random(0, width);
+      // let y1 = random(0, height);
+      let x1 = width/2;
+      let y1 = height/2;
+
       let mask = maskImg.get(x1, y1);
       if(mask[1] > 128) {
-        let x2 = x1 + random(-20, 20);
-        let y2 = y1 + random(-20, 20);
-        //colorMode(RGB);
-        //fill(255,255,0);
-        
-
-        colorMode(HSB,255);
-        const c = color('hsb(62, 150%, 100%)');
-        fill(c);
-        ellipse(x1, y1, 80);
-        
-        
     
+
+        // for(i=0;i<59;i++){
+
+        colorMode(RGB);
+        // fill(255,255,0,50);
+        // ellipse(x1, y1, 300);
+
+        // fill(255,255,0);
+        // ellipse(x1, y1, 200);
+
+        // fill(255,255,255);
+        // ellipse(x1, y1, 100);
+
+        fill(255,255,255,50);
+        ellipse(x1, y1, 50);
+
+        // }
+
+        // fill(255,255,0);
+        // ellipse(x1-40, y1, 20);
+        // ellipse(x1+40, y1, 20);
+
+        // fill(255);
+        // ellipse(x1-20, y1, 20);
+        // ellipse(x1+20, y1, 20);
+
+
+        // colorMode(HSB,255);
+        // const c = color('hsb(62, 150%, 100%)');
+        // fill(c);
+        // ellipse(x1, y1, 80);
+        
       }
     }
     renderCounter = renderCounter + 1;
@@ -89,12 +112,10 @@ function draw () {
      
       stroke(col);
       fill(col);
-      if(mask[1] < 128) {
-        
-      }
-      else {
-        ellipse(x1, y1, 20);
-      }
+      if(mask[1] > 128) {
+       
+        ellipse(x1, y1, 10);
+      } 
     }
     renderCounter = renderCounter + 1;
     // set(i, j, new_col);
@@ -114,7 +135,7 @@ function draw () {
     console.log("Done!")
     noLoop();
     // uncomment this to save the result
-    // saveArtworkImage(outputFile);
+   // saveArtworkImage(outputFile);
   }
 }
 
