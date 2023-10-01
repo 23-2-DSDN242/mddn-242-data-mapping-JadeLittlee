@@ -4,8 +4,8 @@ let renderCounter=0;
 let curLayer = 0;
 
 // change these three lines as appropiate
-let sourceFile = "input_5.jpg";
-let maskFile   = "mask_5.png";
+let sourceFile = "input_w.jpg";
+let maskFile   = "mask_w.png";
 let outputFile = "output_2.png";
 
 function preload() {
@@ -53,33 +53,50 @@ function draw () {
     updatePixels();
   }
   else if (curLayer == 1) { //Halo around cat
-    for(let i=0; i<200; i++) {
+   for(let i=0; i<200; i++) {
       // let x1 = random(0, width);
       // let y1 = random(0, height);
-      let x1 = width/2;
+      let x1 = 1440;
       let y1 = height/2;
+     
 
       let mask = maskImg.get(x1, y1);
-      if(mask[1] > 128) {
-    
+     if(mask[1] > 128) {
+   noStroke();
+    colorMode(RGB);
 
         // for(i=0;i<59;i++){
+          fill(245, 245, 73);
+          ellipse(x1,y1, 1050);
 
-        colorMode(RGB);
-        // fill(255,255,0,50);
-        // ellipse(x1, y1, 300);
+          fill(245, 245, 93);
+          ellipse(x1,y1, 950);
 
-        // fill(255,255,0);
-        // ellipse(x1, y1, 200);
+          fill(247, 247, 105);
+          ellipse(x1,y1, 850);
 
-        // fill(255,255,255);
-        // ellipse(x1, y1, 100);
+          fill(247, 247, 99);
+          ellipse(x1,y1, 750);
 
-        fill(255,255,255,50);
-        ellipse(x1, y1, 50);
+          fill(247, 247, 129); 
+          ellipse(x1, y1, 650);  
 
-        // }
+          fill(245, 245, 169); 
+          ellipse(x1, y1, 550);  
 
+          fill(245, 245, 179); 
+          ellipse(x1, y1, 450); 
+
+          fill(245, 245, 200); 
+          ellipse(x1, y1, 350);  
+      
+        fill(245, 245, 215); //less opaque white at center of halo
+        ellipse(x1, y1, 250);
+
+        fill(255,255,255); //white at center of halo
+        ellipse(x1, y1, 150);
+
+     //}
         // fill(255,255,0);
         // ellipse(x1-40, y1, 20);
         // ellipse(x1+40, y1, 20);
@@ -110,7 +127,7 @@ function draw () {
       let mask = maskImg.get(x1, y1);
       let col = color(pix);
      
-      stroke(col);
+      
       fill(col);
       if(mask[1] > 128) {
        
