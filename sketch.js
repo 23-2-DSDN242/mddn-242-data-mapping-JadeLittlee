@@ -53,7 +53,7 @@ function draw () {
     updatePixels();
   }
   else if (curLayer == 1) { //Halo around cat
-   for(let i=0; i<200; i++) {
+  //  for(let i=0; i<1; i++) {
       // let x1 = random(0, width);
       // let y1 = random(0, height);
       let x1 = 1440;
@@ -65,54 +65,41 @@ function draw () {
    noStroke();
     colorMode(RGB);
 
-        // for(i=0;i<59;i++){
-          fill(245, 245, 73);
+          fill(245, 245, 73,25);
           ellipse(x1,y1, 1050);
 
-          fill(245, 245, 93);
+          fill(245, 245, 93,25);
           ellipse(x1,y1, 950);
 
-          fill(247, 247, 105);
+          fill(247, 247, 105,25);
           ellipse(x1,y1, 850);
 
-          fill(247, 247, 99);
+          fill(247, 247, 99,25);
           ellipse(x1,y1, 750);
 
-          fill(247, 247, 129); 
+          fill(247, 247, 129,25); 
           ellipse(x1, y1, 650);  
 
-          fill(245, 245, 169); 
+          fill(245, 245, 169,25); 
           ellipse(x1, y1, 550);  
 
-          fill(245, 245, 179); 
+          fill(245, 245, 179,25); 
           ellipse(x1, y1, 450); 
 
-          fill(245, 245, 200); 
+          fill(245, 245, 200,25); 
           ellipse(x1, y1, 350);  
       
-        fill(245, 245, 215); //less opaque white at center of halo
+        fill(245, 245, 215,25); //less opaque white at center of halo
         ellipse(x1, y1, 250);
 
-        fill(255,255,255); //white at center of halo
+        fill(255,255,255,25); //white at center of halo
         ellipse(x1, y1, 150);
 
-     //}
-        // fill(255,255,0);
-        // ellipse(x1-40, y1, 20);
-        // ellipse(x1+40, y1, 20);
-
-        // fill(255);
-        // ellipse(x1-20, y1, 20);
-        // ellipse(x1+20, y1, 20);
-
-
-        // colorMode(HSB,255);
-        // const c = color('hsb(62, 150%, 100%)');
-        // fill(c);
-        // ellipse(x1, y1, 80);
+     
+       
         
       }
-    }
+   // }
     renderCounter = renderCounter + 1;
   }
   else { //elements on top of cat and on top of background
@@ -143,7 +130,7 @@ function draw () {
     renderCounter = 0;
     print("Switching to curLayer 1");
   }
-  if(curLayer == 1 && renderCounter > 500) {
+  if(curLayer == 1 && renderCounter > 1) {
     curLayer = 2;
     renderCounter = 0;
     print("Switching to curLayer 2");
