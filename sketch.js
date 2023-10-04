@@ -24,40 +24,75 @@ function setup () {
   maskImg.loadPixels();
   colorMode(HSB);
 }
+// let X_STOP = 840;
+// let Y_STOP = 680;
+let X_STOP = 1920;
+let Y_STOP = 1080;
+let OFFSET = 3;
 
 function draw () {
   if (curLayer == 0) { //background
-    let num_lines_to_draw = 40;
+    let num_lines_to_draw = 40; 
     // get one scanline
-    for(let j=renderCounter; j<renderCounter+num_lines_to_draw && j<1080; j++) {
-      for(let i=0; i<1920; i++) {
+    for(let j=renderCounter; j<renderCounter+num_lines_to_draw && j<Y_STOP; j++) {
+      for(let i=5; i<X_STOP; i++) {
         colorMode(RGB);
-        let pix = sourceImg.get(i, j);
-        // create a color from the values (always RGB)
-        let col = color(pix);
+        /*blurry code*/
+        let pix = [0,0,0,255]
         let mask = maskImg.get(i, j);
+        if (mask[1] > 128) {
+          pix = sourceImg.get(i, j);
+        }
+        else {
+          let sum_rgb =  [0,0,0];
+          let num_cells = 0;
+          for(let wx=-OFFSET;wx<OFFSET; wx++){
+          for(let wy=-OFFSET;wy<OFFSET; wy++){
+            let pix = sourceImg.get(i+wx, j+wy);
+            for(let c=0; c<3; c++) {
+              sum_rgb[c] += pix[c];
+            }
+            num_cells += 1;
+          }
+          }
+          for(let c=0; c<3; c++) {
+            pix[c] = int(sum_rgb[c]/num_cells);
+          }
+        
 
-        colorMode(HSB, 360, 100, 100);
-        // draw a "dimmed" version in gray
-        let h = hue(col);
-        let s = saturation(col);
-        let b = brightness(col);
 
-        let new_brt = map(b, 0, 100, 30, 50);
-        //let new_sat = map(s,0,100,20,80);
-        let new_col = color(h, 0, new_brt);
-        set(i, j, new_col);
+        }
+        set(i, j, pix);
+
+        /*greyed out code*/
+            // let pix = sourceImg.get(i, j);
+        // // create a color from the values (always RGB)
+        // let col = color(pix);
+        //let mask = maskImg.get(i, j);
+        
+        // colorMode(HSB, 360, 100, 100);
+        // // draw a "dimmed" version in gray
+        // let h = hue(col);
+        // let s = saturation(col);
+        // let b = brightness(col);
+
+        // let new_brt = map(b, 0, 100, 30, 50);
+        // //let new_sat = map(s,0,100,20,80);
+        // let new_col = color(h, 0, new_brt);
+        // set(i, j, new_col);
       }
     }
+  
     renderCounter = renderCounter + num_lines_to_draw;
     updatePixels();
   }
+
   else if (curLayer == 1) { //Halo around cat
   //  for(let i=0; i<1; i++) {
       // let x1 = random(0, width);
       // let y1 = random(0, height);
       let x1 = 1440;
-      let y1 = height/2;
+      let y1 = 500; //540
      
 
       let mask = maskImg.get(x1, y1);
