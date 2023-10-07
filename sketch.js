@@ -6,7 +6,7 @@ let curLayer = 0;
 // change these three lines as appropiate
 let sourceFile = "input_6.jpg";
 let maskFile   = "mask_6.png";
-let outputFile = "output_2.png";
+let outputFile = "output_1.png";
 
 function preload() {
   sourceImg = loadImage(sourceFile);
@@ -28,7 +28,7 @@ function setup () {
 // let Y_STOP = 480;
 let X_STOP = 1920;
 let Y_STOP = 1080;
-let OFFSET = 3;
+
 
 function draw () {
   if (curLayer == 0) { //background
@@ -90,8 +90,6 @@ function draw () {
   }
 
   else if (curLayer == 1) { 
-      // let x1 = random(0, width);
-      // let y1 = random(0, height);
       let x1 = 1440;
       let y1 = 500; //540
      
@@ -193,7 +191,7 @@ function draw () {
     console.log("Done!")
     noLoop();
     // uncomment this to save the result
-   // saveArtworkImage(outputFile);
+   //saveArtworkImage(outputFile);
   }
 }
 
