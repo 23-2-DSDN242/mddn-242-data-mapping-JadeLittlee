@@ -53,7 +53,9 @@ function draw () {
           let new_brt = map(b, 0, 100, 30, 50);
           //let new_sat = map(s,0,100,20,80);
           let new_col = color(h, 0, new_brt);
+          
           set(i, j, new_col);
+         
           
         // /*blurry code*/
         // let pix = [0,0,0,255]
@@ -86,16 +88,34 @@ function draw () {
     renderCounter = renderCounter + num_lines_to_draw;
     updatePixels();
   }
-/*Halo around my cat */
+
   else if (curLayer == 1) { 
-  //  for(let i=0; i<1; i++) {
       // let x1 = random(0, width);
       // let y1 = random(0, height);
       let x1 = 1440;
       let y1 = 500; //540
      
-     
+      /*blurry effect in background using ellipses with different transparencies*/ 
+      colorMode(RGB);
+  fill(128,128,128, 50);
+   ellipse(width/2,height/2,1000);
 
+   fill(128,128,128, 100);
+   ellipse(width/2-300,height/2+300,1000);
+
+   fill(120,120,120, 100);
+   ellipse(200,height/2-300,1200);
+
+   fill(169,169,169, 50);
+   ellipse(1700,height/2-300,1000);
+
+   fill(169,169,169, 25);
+   ellipse(100,height/2+400,700);
+
+   fill(169,169,169, 25);
+   ellipse(1500,height/2+200,1200); 
+
+      /*Halo around my cat */
       let mask = maskImg.get(x1, y1);
      if(mask[1] > 128) {
    noStroke();
@@ -135,7 +155,7 @@ function draw () {
        
         
       }
-   // }
+   
     renderCounter = renderCounter + 1;
   }
   else { /*elements on top of cat and on top of background*/
@@ -143,8 +163,6 @@ function draw () {
     for(let i=0; i<100; i++) {
       let x1 = random(0, width);
       let y1 = random(0, height);
-      let x2 = x1 + random(-10, 10);
-      let y2 = y1 + random(-10, 10);
       colorMode(RGB);
       let pix = sourceImg.get(x1, y1);
       let mask = maskImg.get(x1, y1);
