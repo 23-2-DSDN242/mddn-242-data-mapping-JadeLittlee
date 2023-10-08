@@ -92,6 +92,7 @@ function draw () {
   else if (curLayer == 1) { 
       let x1 = 1440;
       let y1 = 500; //540
+      
      
       /*blurry effect in background using ellipses with different transparencies*/ 
       colorMode(RGB);
@@ -113,14 +114,15 @@ function draw () {
    fill(169,169,169, 25);
    ellipse(1500,height/2+200,1200); 
 
-      /*Halo around my cat */
-      let mask = maskImg.get(x1, y1);
-     if(mask[1] > 128) {
+
+      /*Halo around my cat that utilises 25% opacity to create a glow effect */
+    //   let mask = maskImg.get(x1, y1);
+    //  if(mask[1] < 128) {
    noStroke();
     colorMode(RGB);
 
           fill(245, 245, 73,25);
-          ellipse(x1,y1, 1050);
+          ellipse(x1 ,y1, 1050);
 
           fill(245, 245, 93,25);
           ellipse(x1,y1, 950);
@@ -143,16 +145,16 @@ function draw () {
           fill(245, 245, 200,25); 
           ellipse(x1, y1, 350);  
       
-        fill(245, 245, 215,25); //less opaque white at center of halo
+        fill(245, 245, 215,25); 
         ellipse(x1, y1, 250);
 
-        fill(255,255,255,25); //white at center of halo
+        fill(255,255,255,25); //white at center of halo with a low opacity
         ellipse(x1, y1, 150);
 
      
        
         
-      }
+     // }
    
     renderCounter = renderCounter + 1;
   }

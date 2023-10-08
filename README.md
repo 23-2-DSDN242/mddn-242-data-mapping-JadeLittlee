@@ -4,7 +4,7 @@
 The images above are photos of Wellington CBD algorithmically processed with a lightly modified version of the [p5.js Pointillism example](https://p5js.org/examples/image-pointillism.html). The masks for each photo highlight various objects. Replace this text with your own which explains the source of your photos, masking, and applied algorithm.
 
 # A Cat's Life by Jade Little
-## Creative Coding 2: Custom Pixel
+## Creative Coding 2: Custom Pixel & AI Camera
 
 As this project was focused on creating an AI camera based of a theme that is personal to me, I have chosen to focus on my cat, Felicity. The theme is 'A Cat's Life'. The objective was to showcase how cat's have it easy in life, and don't have many worries in the world – unlike us humans. My cat is constantly sleeping on our beds, and in/on blankets. She has two sides to her, a sassy side, and a very sweet loving side. For this project, since I wanted to highlight a cat's chill life, I've decided to play off of Felicity's sweet side. Therefore, I'm aiming to apply a softness to Felicity, and probably the rest of the image, but keeping the halo around her bright, and perhaps soften the edges to blend in with the background.
 
