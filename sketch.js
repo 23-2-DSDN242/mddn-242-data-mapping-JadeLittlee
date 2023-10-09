@@ -3,6 +3,9 @@ let maskImg=null;
 let renderCounter=0;
 let curLayer = 0;
 
+let maskCenter = null;
+let maskCenterSize = null;
+
 // change these three lines as appropiate
 let sourceFile = "input_6.jpg";
 let maskFile   = "mask_6.png";
@@ -23,11 +26,63 @@ function setup () {
   sourceImg.loadPixels();
   maskImg.loadPixels();
   colorMode(HSB);
+
+  maskCenterSearch(20);
 }
 // let X_STOP = 1920;
 // let Y_STOP = 480;
 let X_STOP = 1920;
 let Y_STOP = 1080;
+
+function maskCenterSearch(min_width) {
+  let max_up_down = 0;
+  let max_left_right = 0;
+  let max_x_index = 0;
+  let max_y_index = 0;
+
+  // first scan all rows top to bottom
+  print("Scanning mask top to bottom...")
+  for(let j=0; j<Y_STOP; j++) {
+    // look across this row left to right and count
+    let mask_count = 0;
+    for(let i=0; i<X_STOP; i++) {
+      let mask = maskImg.get(i, j);
+      if (mask[1] > 128) {
+        mask_count = mask_count + 1;
+      }
+    }
+    // check if that row sets a new record
+    if (mask_count > max_left_right) {
+      max_left_right = mask_count;
+      max_y_index = j;
+    }
+  }
+
+    // now scan once left to right as well
+    print("Scanning mask left to right...")
+    for(let i=0; i<X_STOP; i++) {
+      // look across this column up to down and count
+      let mask_count = 0;
+      for(let j=0; j<Y_STOP; j++) {
+        let mask = maskImg.get(i, j);
+        if (mask[1] > 128) {
+          mask_count = mask_count + 1;
+        }
+      }
+      // check if that row sets a new record
+      if (mask_count > max_up_down) {
+        max_up_down = mask_count;
+        max_x_index = i;
+      }
+    }
+
+    print("Scanning mask done!")
+    if (max_left_right > min_width && max_up_down > min_width) {
+      maskCenter = [max_x_index, max_y_index];
+      maskCenterSize = [max_left_right, max_up_down];
+    }
+}
+
 
 
 function draw () {
@@ -90,10 +145,7 @@ function draw () {
   }
 
   else if (curLayer == 1) { 
-      let x1 = 1440;
-      let y1 = 500; //540
-      
-     
+    
       /*blurry effect in background using ellipses with different transparencies*/ 
       colorMode(RGB);
   fill(128,128,128, 50);
@@ -116,47 +168,67 @@ function draw () {
 
 
       /*Halo around my cat that utilises 25% opacity to create a glow effect */
-    //   let mask = maskImg.get(x1, y1);
+    
+      //   let mask = maskImg.get(x1, y1);
     //  if(mask[1] < 128) {
+
+      if (maskCenter !== null) {
+      
+        fill(255, 255, 255);
+       
+        ellipse(maskCenter[0], maskCenter[1], 50);
+      }
+  
+        else if(sourceFile = "input_6.jpg"){
+          fill(255, 255, 255);
+          ellipse(maskCenter[0] + 400, maskCenter[1] +400 , 50);
+        }
+
+         // let x1 = 1440;
+      // let y1 = 500; //540
+      let halox = maskCenter[0];
+      let haloy = maskCenter[1];
+
    noStroke();
     colorMode(RGB);
 
           fill(245, 245, 73,25);
-          ellipse(x1 ,y1, 1050);
+          ellipse(halox ,haloy, 1050);
 
           fill(245, 245, 93,25);
-          ellipse(x1,y1, 950);
+          ellipse(halox, haloy, 950);
 
           fill(247, 247, 105,25);
-          ellipse(x1,y1, 850);
+          ellipse(halox, haloy, 850);
 
           fill(247, 247, 99,25);
-          ellipse(x1,y1, 750);
+          ellipse(halox, haloy, 750);
 
           fill(247, 247, 129,25); 
-          ellipse(x1, y1, 650);  
+          ellipse(halox, haloy, 650);  
 
           fill(245, 245, 169,25); 
-          ellipse(x1, y1, 550);  
+          ellipse(halox, haloy, 550);  
 
           fill(245, 245, 179,25); 
-          ellipse(x1, y1, 450); 
+          ellipse(halox, haloy, 450); 
 
           fill(245, 245, 200,25); 
-          ellipse(x1, y1, 350);  
+          ellipse(halox, haloy, 350);  
       
         fill(245, 245, 215,25); 
-        ellipse(x1, y1, 250);
+        ellipse(halox, haloy, 250);
 
         fill(255,255,255,25); //white at center of halo with a low opacity
-        ellipse(x1, y1, 150);
+        ellipse(halox, haloy, 150);
 
-     
-       
         
      // }
    
     renderCounter = renderCounter + 1;
+
+   
+    
   }
   else { /*elements on top of cat and on top of background*/
     
@@ -177,6 +249,8 @@ function draw () {
     }
     renderCounter = renderCounter + 1;
     // set(i, j, new_col);
+
+
   }
   // print(renderCounter);
   if(curLayer == 0 && renderCounter > 1080) {
