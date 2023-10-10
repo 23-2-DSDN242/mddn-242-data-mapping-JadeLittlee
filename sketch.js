@@ -9,8 +9,8 @@ let curLayer = 0;
 // let maskCenterSize = null;
 
 // change these three lines as appropiate
-let sourceFile = "input_2.jpg";
-let maskFile   = "mask_2.png";
+let sourceFile = "input_1.jpg";
+let maskFile   = "mask_1.png";
 let outputFile = "output_1.png";
 
 function preload() {
@@ -98,19 +98,20 @@ function draw () {
           let pix = sourceImg.get(i, j);
           // create a color from the values (always RGB)
           let col = color(pix);
-          let mask = maskImg.get(i, j);
+          set(i, j, col);
+          // let mask = maskImg.get(i, j);
           
-          colorMode(HSB, 360, 100, 100);
-          // draw a "dimmed" version in gray
-          let h = hue(col);
-          let s = saturation(col);
-          let b = brightness(col);
+          // colorMode(HSB, 360, 100, 100);
+          // // draw a "dimmed" version in gray
+          // let h = hue(col);
+          // let s = saturation(col);
+          // let b = brightness(col);
   
-          let new_brt = map(b, 0, 100, 30, 50);
-          //let new_sat = map(s,0,100,20,80);
-          let new_col = color(h, 0, new_brt);
+          // let new_brt = map(b, 0, 100, 30, 50);
+          // //let new_sat = map(s,0,100,20,80);
+          // let new_col = color(h, 0, new_brt);
           
-          set(i, j, new_col);
+          // set(i, j, new_col);
          
           
         // /*blurry code*/
@@ -136,7 +137,6 @@ function draw () {
         //   }
         // }
         // set(i, j, pix);
-
       
       }
     }
@@ -150,22 +150,49 @@ function draw () {
   /*blurry effect in background using ellipses with different transparencies*/ 
   colorMode(RGB);
   fill(128,128,128, 50);
-   ellipse(width/2,height/2,1000);
-
-   fill(128,128,128, 100);
-   ellipse(width/2-300,height/2+300,1000);
-
-   fill(120,120,120, 100);
-   ellipse(200,height/2-300,1200);
+   ellipse(width/2,height/2,500); //center circle
 
    fill(169,169,169, 50);
-   ellipse(1700,height/2-300,1000);
+   ellipse(width/2-50,height/2-350,600); //middle of the top row of ellipses 
 
-   fill(169,169,169, 25);
-   ellipse(100,height/2+400,700);
+   fill(128,128,128, 75);
+   ellipse(width/2,height/2+350,600); //middle bottom
 
-   fill(169,169,169, 25);
-   ellipse(1500,height/2+200,1200); 
+   fill(128,128,128, 100);
+   ellipse(width/2-450,height/2+350,600); //second from the left at the bottom
+
+   fill(120,120,120, 100);
+   ellipse(150,height/2-300,600); //top left corner
+
+   fill(169,169,169, 100);
+   ellipse(150,height/2+120,450); //middle left corner
+
+   fill(169,169,169, 50);
+   ellipse(1750,height/2-350,500); //top right corner
+
+   fill(128, 128,128, 50);
+   ellipse(1700,height/2,600); //middle right 
+
+   fill(169,169,169, 50);
+   ellipse(100,height/2+450,400); //bottom left corner
+
+   fill(128,128,128, 50);
+   ellipse(500,height/2-400,500); //second from the left at the top
+
+   fill(128,128,128, 50);
+   ellipse(1350,height/2-350,600); //second from the right at the top
+
+   fill(120,120,120, 50);
+   ellipse(500,height/2,500); // second from the middle on the left
+
+   fill(169,169,169, 50);
+   ellipse(1300,height/2+100,400); // second from the middle on the right
+
+   fill(169,169,169, 50);
+   ellipse(1400,height/2+400,500);  //second from the right at the bottom
+
+   fill(169,169,169, 100);
+   ellipse(1800,height/2+400,600);  //bottom right corner
 
 
 /*Halo around my cat that utilises 25% opacity to create a glow effect */
