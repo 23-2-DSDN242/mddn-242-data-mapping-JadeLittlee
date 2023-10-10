@@ -239,11 +239,15 @@ function draw () {
 
    noStroke();
    colorMode(RGB);
-   let halox = [960,1190,770,960,1120,1440];
+   
+  
+  let halox = [960,1190,770,960,1120,1440];
    let haloy = [540,690,700,450,600,500];
+   
+  
   
       if((sourceFile = "input_1.jpg" ) && (maskFile = "mask_1.png")){
-
+        
 
           fill(245, 245, 73,25);
           ellipse(halox[0] ,haloy[0], 1050);
@@ -274,9 +278,11 @@ function draw () {
 
         fill(255,255,255,25); //white at center of halo with a low opacity
         ellipse(halox[0], haloy[0], 150);
-      }
       
+        }
       if((sourceFile = "input_2.jpg") && (maskFile = "mask_2.png")){
+        
+
 
                fill(245, 245, 73,25);
                ellipse(halox[1] ,haloy[1], 1050);
@@ -307,8 +313,41 @@ function draw () {
      
              fill(255,255,255,25); //white at center of halo with a low opacity
              ellipse(halox[1], haloy[1], 150);
-     
-           }
+        }
+        if((sourceFile = "input_3.jpg") && (maskFile = "mask_3.png")){
+
+
+          fill(245, 245, 73,25);
+          ellipse(halox[2] ,haloy[2], 1050);
+
+          fill(245, 245, 93,25);
+          ellipse(halox[2], haloy[2], 950);
+
+          fill(247, 247, 105,25);
+          ellipse(halox[2], haloy[2], 850);
+
+          fill(247, 247, 99,25);
+          ellipse (halox[2], haloy[2], 750);
+
+          fill(247, 247, 129,25); 
+          ellipse(halox[2], haloy[2], 650);  
+
+          fill(245, 245, 169,25); 
+          ellipse(halox[2], haloy[2], 550);  
+
+          fill(245, 245, 179,25); 
+          ellipse(halox[2], haloy[2], 450); 
+
+          fill(245, 245, 200,25); 
+          ellipse(halox[2], haloy[2], 350);  
+      
+        fill(245, 245, 215,25); 
+        ellipse(halox[2], haloy[2], 250);
+
+        fill(255,255,255,25); //white at center of halo with a low opacity
+        ellipse(halox[2], haloy[2], 150);
+   }
+           
           
         
     renderCounter = renderCounter + 1;
