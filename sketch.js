@@ -3,12 +3,14 @@ let maskImg=null;
 let renderCounter=0;
 let curLayer = 0;
 
-let maskCenter = null;
-let maskCenterSize = null;
+
+
+// let maskCenter = null;
+// let maskCenterSize = null;
 
 // change these three lines as appropiate
-let sourceFile = "input_6.jpg";
-let maskFile   = "mask_6.png";
+let sourceFile = "input_2.jpg";
+let maskFile   = "mask_2.png";
 let outputFile = "output_1.png";
 
 function preload() {
@@ -27,61 +29,60 @@ function setup () {
   maskImg.loadPixels();
   colorMode(HSB);
 
-  maskCenterSearch(20);
+ // maskCenterSearch(20);
 }
-// let X_STOP = 1920;
-// let Y_STOP = 480;
+/*for editing purposes*/
 let X_STOP = 1920;
 let Y_STOP = 1080;
 
-function maskCenterSearch(min_width) {
-  let max_up_down = 0;
-  let max_left_right = 0;
-  let max_x_index = 0;
-  let max_y_index = 0;
+// function maskCenterSearch(min_width) {
+//   let max_up_down = 0;
+//   let max_left_right = 0;
+//   let max_x_index = 0;
+//   let max_y_index = 0;
 
-  // first scan all rows top to bottom
-  print("Scanning mask top to bottom...")
-  for(let j=0; j<Y_STOP; j++) {
-    // look across this row left to right and count
-    let mask_count = 0;
-    for(let i=0; i<X_STOP; i++) {
-      let mask = maskImg.get(i, j);
-      if (mask[1] > 128) {
-        mask_count = mask_count + 1;
-      }
-    }
-    // check if that row sets a new record
-    if (mask_count > max_left_right) {
-      max_left_right = mask_count;
-      max_y_index = j;
-    }
-  }
+//   // first scan all rows top to bottom
+//   print("Scanning mask top to bottom...")
+//   for(let j=0; j<Y_STOP; j++) {
+//     // look across this row left to right and count
+//     let mask_count = 0;
+//     for(let i=0; i<X_STOP; i++) {
+//       let mask = maskImg.get(i, j);
+//       if (mask[1] > 128) {
+//         mask_count = mask_count + 1;
+//       }
+//     }
+//     // check if that row sets a new record
+//     if (mask_count > max_left_right) {
+//       max_left_right = mask_count;
+//       max_y_index = j;
+//     }
+//   }
 
-    // now scan once left to right as well
-    print("Scanning mask left to right...")
-    for(let i=0; i<X_STOP; i++) {
-      // look across this column up to down and count
-      let mask_count = 0;
-      for(let j=0; j<Y_STOP; j++) {
-        let mask = maskImg.get(i, j);
-        if (mask[1] > 128) {
-          mask_count = mask_count + 1;
-        }
-      }
-      // check if that row sets a new record
-      if (mask_count > max_up_down) {
-        max_up_down = mask_count;
-        max_x_index = i;
-      }
-    }
+//     // now scan once left to right as well
+//     print("Scanning mask left to right...")
+//     for(let i=0; i<X_STOP; i++) {
+//       // look across this column up to down and count
+//       let mask_count = 0;
+//       for(let j=0; j<Y_STOP; j++) {
+//         let mask = maskImg.get(i, j);
+//         if (mask[1] > 128) {
+//           mask_count = mask_count + 1;
+//         }
+//       }
+//       // check if that row sets a new record
+//       if (mask_count > max_up_down) {
+//         max_up_down = mask_count;
+//         max_x_index = i;
+//       }
+//     }
 
-    print("Scanning mask done!")
-    if (max_left_right > min_width && max_up_down > min_width) {
-      maskCenter = [max_x_index, max_y_index];
-      maskCenterSize = [max_left_right, max_up_down];
-    }
-}
+//     print("Scanning mask done!")
+//     if (max_left_right > min_width && max_up_down > min_width) {
+//       maskCenter = [max_x_index, max_y_index];
+//       maskCenterSize = [max_left_right, max_up_down];
+//     }
+// }
 
 
 
@@ -146,8 +147,8 @@ function draw () {
 
   else if (curLayer == 1) { 
     
-      /*blurry effect in background using ellipses with different transparencies*/ 
-      colorMode(RGB);
+  /*blurry effect in background using ellipses with different transparencies*/ 
+  colorMode(RGB);
   fill(128,128,128, 50);
    ellipse(width/2,height/2,1000);
 
@@ -167,64 +168,122 @@ function draw () {
    ellipse(1500,height/2+200,1200); 
 
 
-      /*Halo around my cat that utilises 25% opacity to create a glow effect */
+/*Halo around my cat that utilises 25% opacity to create a glow effect */
     
-      //   let mask = maskImg.get(x1, y1);
-    //  if(mask[1] < 128) {
-
-      if (maskCenter !== null) {
+      // if (maskCenter !== null) {
       
-        fill(255, 255, 255);
+      //   fill(255, 255, 255);
        
-        ellipse(maskCenter[0], maskCenter[1], 50);
-      }
+      //   ellipse(maskCenter[0], maskCenter[1], 50);
+      
+      // }
   
-        else if(sourceFile = "input_6.jpg"){
-          fill(255, 255, 255);
-          ellipse(maskCenter[0] + 400, maskCenter[1] +400 , 50);
-        }
 
-         // let x1 = 1440;
-      // let y1 = 500; //540
-      let halox = maskCenter[0];
-      let haloy = maskCenter[1];
+      /*Working out the placement of my ellipses based on each image and its mask */
+      
+      /*input 1*/
+      // let halox = 960;
+      // let haloy = 540; 
+
+       //input 2
+      //  let halox = 1190;
+      //  let haloy = 680; 
+
+        /*input 3*/
+        // let halox = 770;
+        // let haloy = 700; 
+
+         /*input 4*/
+        //  let halox = 960;
+        //  let haloy = 450; 
+
+        /*input 5*/
+        // let halox = 1120;
+        // let haloy = 600; 
+
+      /*input 6*/
+      //    let halox = 1440;
+      // let haloy = 500; 
+
+      /*spare code for if I want to find the center of the mask – doesn't work on all images */
+      // let halox = maskCenter[0];
+      // let haloy = maskCenter[1];
+
 
    noStroke();
-    colorMode(RGB);
+   colorMode(RGB);
+   let halox = [960,1190,770,960,1120,1440];
+   let haloy = [540,690,700,450,600,500];
+  
+      if((sourceFile = "input_1.jpg" ) && (maskFile = "mask_1.png")){
+
 
           fill(245, 245, 73,25);
-          ellipse(halox ,haloy, 1050);
+          ellipse(halox[0] ,haloy[0], 1050);
 
           fill(245, 245, 93,25);
-          ellipse(halox, haloy, 950);
+          ellipse(halox[0], haloy[0], 950);
 
           fill(247, 247, 105,25);
-          ellipse(halox, haloy, 850);
+          ellipse(halox[0], haloy[0], 850);
 
           fill(247, 247, 99,25);
-          ellipse(halox, haloy, 750);
+          ellipse (halox[0], haloy[0], 750);
 
           fill(247, 247, 129,25); 
-          ellipse(halox, haloy, 650);  
+          ellipse(halox[0], haloy[0], 650);  
 
           fill(245, 245, 169,25); 
-          ellipse(halox, haloy, 550);  
+          ellipse(halox[0], haloy[0], 550);  
 
           fill(245, 245, 179,25); 
-          ellipse(halox, haloy, 450); 
+          ellipse(halox[0], haloy[0], 450); 
 
           fill(245, 245, 200,25); 
-          ellipse(halox, haloy, 350);  
+          ellipse(halox[0], haloy[0], 350);  
       
         fill(245, 245, 215,25); 
-        ellipse(halox, haloy, 250);
+        ellipse(halox[0], haloy[0], 250);
 
         fill(255,255,255,25); //white at center of halo with a low opacity
-        ellipse(halox, haloy, 150);
+        ellipse(halox[0], haloy[0], 150);
+      }
+      
+      if((sourceFile = "input_2.jpg") && (maskFile = "mask_2.png")){
 
+               fill(245, 245, 73,25);
+               ellipse(halox[1] ,haloy[1], 1050);
+     
+               fill(245, 245, 93,25);
+               ellipse(halox[1], haloy[1], 950);
+     
+               fill(247, 247, 105,25);
+               ellipse(halox[1], haloy[1], 850);
+     
+               fill(247, 247, 99,25);
+               ellipse (halox[1], haloy[1], 750);
+     
+               fill(247, 247, 129,25); 
+               ellipse(halox[1], haloy[1], 650);  
+     
+               fill(245, 245, 169,25); 
+               ellipse(halox[1], haloy[1], 550);  
+     
+               fill(245, 245, 179,25); 
+               ellipse(halox[1], haloy[1], 450); 
+     
+               fill(245, 245, 200,25); 
+               ellipse(halox[1], haloy[1], 350);  
+           
+             fill(245, 245, 215,25); 
+             ellipse(halox[1], haloy[1], 250);
+     
+             fill(255,255,255,25); //white at center of halo with a low opacity
+             ellipse(halox[1], haloy[1], 150);
+     
+           }
+          
         
-     // }
-   
     renderCounter = renderCounter + 1;
 
    
