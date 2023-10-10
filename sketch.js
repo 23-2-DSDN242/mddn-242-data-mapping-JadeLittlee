@@ -9,8 +9,8 @@ let curLayer = 0;
 // let maskCenterSize = null;
 
 // change these three lines as appropiate
-let sourceFile = "input_1.jpg";
-let maskFile   = "mask_1.png";
+let sourceFile = "input_3.jpg";
+let maskFile   = "mask_3.png";
 let outputFile = "output_1.png";
 
 function preload() {
@@ -246,7 +246,7 @@ function draw () {
    
   
   
-      if((sourceFile = "input_1.jpg" ) && (maskFile = "mask_1.png")){
+      if((sourceFile == "input_1.jpg" ) && (maskFile == "mask_1.png")){
         
 
           fill(245, 245, 73,25);
@@ -280,7 +280,7 @@ function draw () {
         ellipse(halox[0], haloy[0], 150);
       
         }
-      if((sourceFile = "input_2.jpg") && (maskFile = "mask_2.png")){
+      if((sourceFile == "input_2.jpg") && (maskFile == "mask_2.png")){
         
 
 
@@ -314,7 +314,7 @@ function draw () {
              fill(255,255,255,25); //white at center of halo with a low opacity
              ellipse(halox[1], haloy[1], 150);
         }
-        if((sourceFile = "input_3.jpg") && (maskFile = "mask_3.png")){
+        if((sourceFile == "input_3.jpg") && (maskFile == "mask_3.png")){
 
 
           fill(245, 245, 73,25);
