@@ -151,11 +151,19 @@ function draw () {
   /*blurry effect in background using ellipses with different transparencies*/ 
 
   //rectangle white wash for over the yellow
-  colorMode(RGB);
-  fill(255,255,255,40);
-  rect(0,0,1920,1080);
+  // colorMode(RGB);
+  // fill(255,255,255,40);
+  // rect(0,0,1920,1080);
 
-  //yellow ellipses
+  //white ellipses
+  colorMode(RGB);
+  for (let i = 0; i < 40; i++) {
+    let size = random(500);
+    let x = random(1920);
+    let y = random(1080)
+    fill(255,255,255, 20);
+    ellipse(x,y, size)
+  }
 
   //  colorMode(RGB);
   // fill(255,255,255, 20);
