@@ -3,12 +3,10 @@ let maskImg=null;
 let renderCounter=0;
 let curLayer = 0;
 
-
-
 let maskCenter = null;
 
 
-// change these three lines as appropiate
+// These lines control which image (1-6) that you see when you view the render program
 let sourceFile = "input_1.jpg";
 let maskFile   = "mask_1.png";
 let outputFile = "output_1.png";
@@ -31,9 +29,9 @@ function setup () {
 
   maskCenterSearch2(20);
 }
-/*for editing purposes*/
-let X_STOP = 1920;
-let Y_STOP = 1080;
+/*for editing purposes when adjusting the code*/
+let X_STOP = 1920; //width of canvas
+let Y_STOP = 1080; //height of canvas
 
 function maskCenterSearch2(min_width) {
   // we store the sum of x,y whereever the mask is on
@@ -65,86 +63,29 @@ function maskCenterSearch2(min_width) {
   }
 }
 
-// function maskCenterSearch(min_width) {
-//   let max_up_down = 0;
-//   let max_left_right = 0;
-//   let max_x_index = 0;
-//   let max_y_index = 0;
-
-//   // first scan all rows top to bottom
-//   print("Scanning mask top to bottom...")
-//   for(let j=0; j<Y_STOP; j++) {
-//     // look across this row left to right and count
-//     let mask_count = 0;
-//     for(let i=0; i<X_STOP; i++) {
-//       let mask = maskImg.get(i, j);
-//       if (mask[1] > 128) {
-//         mask_count = mask_count + 1;
-//       }
-//     }
-//     // check if that row sets a new record
-//     if (mask_count > max_left_right) {
-//       max_left_right = mask_count;
-//       max_y_index = j;
-//     }
-//   }
-
-//     // now scan once left to right as well
-//     print("Scanning mask left to right...")
-//     for(let i=0; i<X_STOP; i++) {
-//       // look across this column up to down and count
-//       let mask_count = 0;
-//       for(let j=0; j<Y_STOP; j++) {
-//         let mask = maskImg.get(i, j);
-//         if (mask[1] > 128) {
-//           mask_count = mask_count + 1;
-//         }
-//       }
-//       // check if that row sets a new record
-//       if (mask_count > max_up_down) {
-//         max_up_down = mask_count;
-//         max_x_index = i;
-//       }
-//     }
-
-//     print("Scanning mask done!")
-//     if (max_left_right > min_width && max_up_down > min_width) {
-//       maskCenter = [max_x_index, max_y_index];
-      
-//     }
-// }
-
 
 
 function draw () {
-  if (curLayer == 0) { //background
+  if (curLayer == 0) { //background layer – the original image and the yellow tinge applied to this image
     let num_lines_to_draw = 40; 
     // get one scanline
     for(let j=renderCounter; j<renderCounter+num_lines_to_draw && j<Y_STOP; j++) {
       for(let i=0; i<X_STOP; i++) {
         colorMode(RGB);
 
-          /*greyed out code*/
           let pix = sourceImg.get(i, j);
           // create a color from the values (always RGB)
           let col = color(pix);
-          // set(i, j, col);
-          
           
           colorMode(HSB, 360, 100, 100);
-          // draw a "dimmed" version in gray
-          let h = hue(col);
-          let s = saturation(col);
           let b = brightness(col);
   
+          //drawing a yellow background that utilises hue, saturation, and brightness
           let new_brt = map(b, 0, 50, 30, 50);
-        //  let new_sat = map(s,0,100,20,80);
-          let new_col = color(50, 80, new_brt); //60 saturation is nice and 50 hue is nice
-          // let new_col = color(h, 0, new_brt);
-          
+          let new_col = color(50, 80, new_brt); 
+      
           set(i, j, new_col);
         
-      
       }
     }
   
@@ -152,9 +93,9 @@ function draw () {
     updatePixels();
   }
 
-  else if (curLayer == 1) { 
+  else if (curLayer == 1) { //layer 2 with the second layer of the background (the low opacity white ellipses), and the halo around my cat
     
-  /*blurry effect in background using ellipses with different transparencies*/ 
+  /*blurry/faded (bokeh) effect in background using white ellipses with 20% opacity*/ 
 
   colorMode(RGB);
   for (let i = 0; i < 40; i++) {
@@ -162,48 +103,18 @@ function draw () {
     let x = random(1920);
     let y = random(1080)
     fill(255,255,255, 20);
-    ellipse(x,y, size)
+    ellipse(x,y, size); //I've utilised random for this bokeh effect, so that 40 ellipses are drawn in random x,y locations, and are a random size
   }
 
   
-/*Halo around my cat that utilises 25% opacity to create a glow effect */
+/*Halo around my cat that utilises 50% opacity to create a glow effect */
     
       if (maskCenter !== null) {
-      
-        fill(255, 255, 255);
-       
-        ellipse(maskCenter[0], maskCenter[1], 50);
-      
+        fill(255, 255, 255); //white
+        ellipse(maskCenter[0], maskCenter[1], 50); //this is a small white ellipse that is placed at the center of the mask to help identify where the code has found the center (not for design purposes - purely for understanding where the center of the mask is).
       }
-  
 
-      /*Working out the placement of my ellipses based on each image and its mask */
-      
-      /*input 1*/
-      // let halox = 960;
-      // let haloy = 540; 
-
-       //input 2
-      //  let halox = 1190;
-      //  let haloy = 680; 
-
-        /*input 3*/
-        // let halox = 770;
-        // let haloy = 700; 
-
-         /*input 4*/
-        //  let halox = 960;
-        //  let haloy = 450; 
-
-        /*input 5*/
-        // let halox = 1120;
-        // let haloy = 600; 
-
-      /*input 6*/
-      //    let halox = 1440;
-      // let haloy = 500; 
-
-      /*spare code for if I want to find the center of the mask – doesn't work on all images */
+      /*This takes the center of the mask and applies the halo where the center is */
       let halox = maskCenter[0];
       let haloy = maskCenter[1];
 
@@ -211,9 +122,9 @@ function draw () {
    noStroke();
    colorMode(RGB);
    
-   
+   //These 10 ellipses and there fill colour make up the halo design - the halo uses the same opacity (50%) for all 10 ellipses, but the colour starts at white at the center, and then transitions to yellow.
    fill(245, 245, 73,50);
-   ellipse(halox ,haloy, 1050);
+   ellipse(halox ,haloy, 1050); //outer-most ellipse
 
    fill(245, 245, 93,50);
       ellipse(halox, haloy, 950);
@@ -242,75 +153,10 @@ function draw () {
     fill(255,255,255,50); //white at center of halo with a low opacity
     ellipse(halox, haloy, 150);
 
-   
-//   let halox = [960,1190,770,960,1120,1440];
-//    let haloy = [540,690,700,450,600,500];
-//    let cur_halo_x = 0;
-//     let cur_halo_y = 0;
-//     if((sourceFile == "input_1.jpg" ) && (maskFile == "mask_1.png")){
-//         cur_halo_x = halox[0];
-//         cur_halo_y = haloy[0];
-//     }
-//     if((sourceFile == "input_2.jpg") && (maskFile == "mask_2.png")){
-//         cur_halo_x = halox[1];
-//         cur_halo_y = haloy[1];
-//     }
-//     if((sourceFile == "input_3.jpg") && (maskFile == "mask_3.png")){
-//       cur_halo_x = halox[2];
-//       cur_halo_y = haloy[2];
-//   }
-//   if((sourceFile == "input_4.jpg") && (maskFile == "mask_4.png")){
-//     cur_halo_x = halox[3];
-//     cur_halo_y = haloy[3];
-// }
-// if((sourceFile == "input_5.jpg") && (maskFile == "mask_5.png")){
-//   cur_halo_x = halox[4];
-//   cur_halo_y = haloy[4];
-// }
-// if((sourceFile == "input_6.jpg") && (maskFile == "mask_6.png")){
-//   cur_halo_x = halox[5];
-//   cur_halo_y = haloy[5];
-// }
-//     // the ellipse code for the halo responding to the above if statements
-//     if((cur_halo_x != 0) && (cur_halo_y != 0)) {
-//       fill(245, 245, 73,50);
-//       ellipse(cur_halo_x ,cur_halo_y, 1050);
-
-//       fill(245, 245, 93,50);
-//       ellipse(cur_halo_x, cur_halo_y, 950);
-
-//       fill(247, 247, 105,50);
-//       ellipse(cur_halo_x, cur_halo_y, 850);
-
-//       fill(247, 247, 99,50);
-//       ellipse (cur_halo_x, cur_halo_y, 750);
-
-//       fill(247, 247, 129,50); 
-//       ellipse(cur_halo_x, cur_halo_y, 650);  
-
-//       fill(245, 245, 169,50); 
-//       ellipse(cur_halo_x, cur_halo_y, 550);  
-
-//       fill(245, 245, 179,50); 
-//       ellipse(cur_halo_x, cur_halo_y, 450); 
-
-//       fill(245, 245, 200,50); 
-//       ellipse(cur_halo_x, cur_halo_y, 350);  
-  
-//     fill(245, 245, 215,50); 
-//     ellipse(cur_halo_x, cur_halo_y, 250);
-
-//     fill(255,255,255,50); //white at center of halo with a low opacity
-//     ellipse(cur_halo_x, cur_halo_y, 150);
-//     }
-  
-  
     renderCounter = renderCounter + 1;
 
-   
-    
   }
-  else { /*elements on top of cat and on top of background*/
+  else { /*This is where I'm drawing the small ellipses on top of my cat – giving that soft pixelation effect*/
     
     for(let i=0; i<100; i++) {
       let x1 = random(0, width);
@@ -318,32 +164,30 @@ function draw () {
       colorMode(RGB);
       let pix = sourceImg.get(x1, y1);
       let mask = maskImg.get(x1, y1);
-      let col = color(pix);
+      let col = color(pix); //this takes the true colours of my cat and applies this colour to the small ellipses
      
       
       fill(col);
       if(mask[1] > 128) {
        
-        ellipse(x1, y1, 10);
+        ellipse(x1, y1, 10); // this draws all the ellipses at point size 10, and they're all drawn randomly within the mask
       } 
     }
     renderCounter = renderCounter + 1;
-    // set(i, j, new_col);
-
-
+    
   }
   // print(renderCounter);
-  if(curLayer == 0 && renderCounter > 1080) {
+  if(curLayer == 0 && renderCounter > 1080) { //this is the yellow background layer – which shows the whole images with no effect, just the yellow tinge on top. The other elements are drawn in layer 2 and 3
     curLayer = 1;
     renderCounter = 0;
     print("Switching to curLayer 1");
   }
-  if(curLayer == 1 && renderCounter > 1) {
+  if(curLayer == 1 && renderCounter > 1) { //this is the background bokeh ellipses and the halo layer
     curLayer = 2;
     renderCounter = 0;
     print("Switching to curLayer 2");
   }
-  else if(curLayer == 2 && renderCounter > 1500) {
+  else if(curLayer == 2 && renderCounter > 1500) { //this is the layer for the cat mask and the pixelation (using small ellipses) effect on top of the cat
     console.log("Done!")
     noLoop();
     // uncomment this to save the result
