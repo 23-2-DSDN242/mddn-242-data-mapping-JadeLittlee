@@ -6,7 +6,7 @@ let curLayer = 0;
 
 
 let maskCenter = null;
-let maskCenterSize = null;
+
 
 // change these three lines as appropiate
 let sourceFile = "input_1.jpg";
@@ -29,60 +29,90 @@ function setup () {
   maskImg.loadPixels();
   colorMode(HSB);
 
-  maskCenterSearch(20);
+  maskCenterSearch2(20);
 }
 /*for editing purposes*/
 let X_STOP = 1920;
 let Y_STOP = 1080;
 
-function maskCenterSearch(min_width) {
-  let max_up_down = 0;
-  let max_left_right = 0;
-  let max_x_index = 0;
-  let max_y_index = 0;
+function maskCenterSearch2(min_width) {
+  // we store the sum of x,y whereever the mask is on
+  // at the end we divide to get the average
+  let mask_x_sum = 0;
+  let mask_y_sum = 0;
+  let mask_count = 0;
 
   // first scan all rows top to bottom
   print("Scanning mask top to bottom...")
   for(let j=0; j<Y_STOP; j++) {
     // look across this row left to right and count
-    let mask_count = 0;
     for(let i=0; i<X_STOP; i++) {
       let mask = maskImg.get(i, j);
       if (mask[1] > 128) {
+        mask_x_sum = mask_x_sum + i;
+        mask_y_sum = mask_y_sum + j;
         mask_count = mask_count + 1;
       }
     }
-    // check if that row sets a new record
-    if (mask_count > max_left_right) {
-      max_left_right = mask_count;
-      max_y_index = j;
-    }
   }
 
-    // now scan once left to right as well
-    print("Scanning mask left to right...")
-    for(let i=0; i<X_STOP; i++) {
-      // look across this column up to down and count
-      let mask_count = 0;
-      for(let j=0; j<Y_STOP; j++) {
-        let mask = maskImg.get(i, j);
-        if (mask[1] > 128) {
-          mask_count = mask_count + 1;
-        }
-      }
-      // check if that row sets a new record
-      if (mask_count > max_up_down) {
-        max_up_down = mask_count;
-        max_x_index = i;
-      }
-    }
-
-    print("Scanning mask done!")
-    if (max_left_right > min_width && max_up_down > min_width) {
-      maskCenter = [max_x_index, max_y_index];
-      maskCenterSize = [max_left_right, max_up_down];
-    }
+  print("Scanning mask done!")
+  if (mask_count > min_width) {
+    let avg_x_pos = int(mask_x_sum / mask_count);
+    let avg_y_pos = int(mask_y_sum / mask_count);
+    maskCenter = [avg_x_pos, avg_y_pos];
+    print("Center set to: " + maskCenter);
+  }
 }
+
+// function maskCenterSearch(min_width) {
+//   let max_up_down = 0;
+//   let max_left_right = 0;
+//   let max_x_index = 0;
+//   let max_y_index = 0;
+
+//   // first scan all rows top to bottom
+//   print("Scanning mask top to bottom...")
+//   for(let j=0; j<Y_STOP; j++) {
+//     // look across this row left to right and count
+//     let mask_count = 0;
+//     for(let i=0; i<X_STOP; i++) {
+//       let mask = maskImg.get(i, j);
+//       if (mask[1] > 128) {
+//         mask_count = mask_count + 1;
+//       }
+//     }
+//     // check if that row sets a new record
+//     if (mask_count > max_left_right) {
+//       max_left_right = mask_count;
+//       max_y_index = j;
+//     }
+//   }
+
+//     // now scan once left to right as well
+//     print("Scanning mask left to right...")
+//     for(let i=0; i<X_STOP; i++) {
+//       // look across this column up to down and count
+//       let mask_count = 0;
+//       for(let j=0; j<Y_STOP; j++) {
+//         let mask = maskImg.get(i, j);
+//         if (mask[1] > 128) {
+//           mask_count = mask_count + 1;
+//         }
+//       }
+//       // check if that row sets a new record
+//       if (mask_count > max_up_down) {
+//         max_up_down = mask_count;
+//         max_x_index = i;
+//       }
+//     }
+
+//     print("Scanning mask done!")
+//     if (max_left_right > min_width && max_up_down > min_width) {
+//       maskCenter = [max_x_index, max_y_index];
+      
+//     }
+// }
 
 
 
