@@ -27,13 +27,13 @@ function setup () {
   maskImg.loadPixels();
   colorMode(HSB);
 
-  maskCenterSearch2(20);
+  maskCenterSearch(20);
 }
 /*for editing purposes when adjusting the code*/
 let X_STOP = 1920; //width of canvas
 let Y_STOP = 1080; //height of canvas
 
-function maskCenterSearch2(min_width) {
+function maskCenterSearch(min_width) {
   // we store the sum of x,y whereever the mask is on
   // at the end we divide to get the average
   let mask_x_sum = 0;
@@ -103,7 +103,7 @@ function draw () {
     let x = random(1920);
     let y = random(1080)
     fill(255,255,255, 20);
-    ellipse(x,y, size); //I've utilised random for this bokeh effect, so that 40 ellipses are drawn in random x,y locations, and are a random size
+    ellipse(x,y, size); //This is how the bokeh effect is being drawn
   }
 
   
@@ -122,7 +122,7 @@ function draw () {
    noStroke();
    colorMode(RGB);
    
-   //These 10 ellipses and there fill colour make up the halo design - the halo uses the same opacity (50%) for all 10 ellipses, but the colour starts at white at the center, and then transitions to yellow.
+   //These 10 ellipses and there fill colour make up the halo design.
    fill(245, 245, 73,50);
    ellipse(halox ,haloy, 1050); //outer-most ellipse
 
@@ -156,7 +156,7 @@ function draw () {
     renderCounter = renderCounter + 1;
 
   }
-  else { /*This is where I'm drawing the small ellipses on top of my cat – giving that soft pixelation effect*/
+  else { /*This is drawing the small ellipses on top of my cat – giving that soft pixelation effect*/
     
     for(let i=0; i<100; i++) {
       let x1 = random(0, width);
@@ -177,7 +177,7 @@ function draw () {
     
   }
   // print(renderCounter);
-  if(curLayer == 0 && renderCounter > 1080) { //this is the yellow background layer – which shows the whole images with no effect, just the yellow tinge on top. The other elements are drawn in layer 2 and 3
+  if(curLayer == 0 && renderCounter > 1080) { //this is the yellow background layer
     curLayer = 1;
     renderCounter = 0;
     print("Switching to curLayer 1");
